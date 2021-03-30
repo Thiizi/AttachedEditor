@@ -8,4 +8,5 @@ Abra o AttachedEditor.pwn com o pawno e compile. (Caso não esteja usando Pawn.C
 
 ## Como utilizar
 Para iniciar o filterscript em sua gamemode, abra o server.cfg e em filterscripts coloque AttachedEditor, ou faça login na rcon in-game e use /rcon loadfs AttachedEditor
+
 Dentro do jogo utilize o comando /aedit.

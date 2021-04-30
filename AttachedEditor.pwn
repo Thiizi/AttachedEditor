@@ -36,6 +36,8 @@ static const AttachedColors[] = {
 	0x3214AAFF,	0x184D3BFF,	0xAE4B99FF,	0x7E49D7FF,	0x4C436EFF,	0xFA24CCFF,	0xCE76BEFF,	0xA04E0AFF,	0x9F945CFF, 0xED5547FF,
 };
 
+new ATTACHED_LIST_COLORS[4000] = "Cor padrÃ£o";
+
 enum E_ATTACHED_EDITOR
 {
 	E_INDEX,
@@ -94,7 +96,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					break;
 				}
 			}
-			if(index == -1) return SendClientMessage(playerid, -1, "Todas as slots estão oculpadas, elimine um objeto.");
+			if(index == -1) return SendClientMessage(playerid, -1, "Todas as slots estÃ£o oculpadas, elimine um objeto.");
 			SetPVarInt(playerid, "AttachedIndex", index);
 			SetPVarInt(playerid, "AttachedModelid", modelid);
 			ShowDialog(playerid, DIALOG_ATTACH_CORPO);
@@ -219,7 +221,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SaveName);
 			fwrite(ExportFile, ExportText);
 			fclose(ExportFile);
-			SendClientMessage(playerid, -1, "Posição do objeto foi salvo em {ED5547}scriptfiles/SavedAttachedEditor.pwn");
+			SendClientMessage(playerid, -1, "PosiÃ§Ã£o do objeto foi salvo em {ED5547}scriptfiles/SavedAttachedEditor.pwn");
 			ShowDialog(playerid, DIALOG_ATTACH_EDIT);
 		}
 	}
@@ -242,54 +244,46 @@ ShowDialog(playerid, dialogid)
 		}
 
 		case DIALOG_ATTACH_ADD:
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Adicionar objeto", "{FFFFFF}Coloque o ID do objeto que deseja adicionar.\n\nVocê pode procurar por objetos em {ED5547}https://dev.prineside.com/gtasa_samp_model_id/{FFFFFF}.", "Adicionar", "Voltar");
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Adicionar objeto", "{FFFFFF}Coloque o ID do objeto que deseja adicionar.\n\nVocÃª pode procurar por objetos em {ED5547}https://dev.prineside.com/gtasa_samp_model_id/{FFFFFF}.", "Adicionar", "Voltar");
 
 		case DIALOG_ATTACH_CORPO:
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Selecione a parte do corpo", "\
 				1. Coluna vertebral\n\
-				2. Cabeça\n\
-				3. Braço esquerdo\n\
-				4. Braço direito\n\
-				5. Mão esquerda\n\
-				6. Mão direita\n\
+				2. CabeÃ§a\n\
+				3. BraÃ§o esquerdo\n\
+				4. BraÃ§o direito\n\
+				5. MÃ£o esquerda\n\
+				6. MÃ£o direita\n\
 				7. Coxa esquerda\n\
 				8. Coxa direita\n\
-				9. Pé esquerdo\n\
-				10. Pé direito\n\
+				9. PÃ© esquerdo\n\
+				10. PÃ© direito\n\
 				11. Panturrilha direita\n\
 				12. Panturrilha esquerda\n\
-				13. Antebraço esquerdo\n\
-				14. Antebraço direito\n\
+				13. AntebraÃ§o esquerdo\n\
+				14. AntebraÃ§o direito\n\
 				15. Ombro esquerdo\n\
 				16. Ombro direito\n\
-				17. Pescoço\n\
-				18. Mandíbula", "Selecionar", "Voltar");
+				17. PescoÃ§o\n\
+				18. MandÃ­bula", "Selecionar", "Voltar");
 
 		case DIALOG_ATTACH_EDIT:
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Editar objeto", "Editar posição\nAlterar cor\nSalvar objeto\nEliminar objeto", "Selecionar", "Voltar");
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Editar objeto", "Editar posiÃ§Ã£o\nAlterar cor\nSalvar objeto\nEliminar objeto", "Selecionar", "Voltar");
 
 		case DIALOG_ATTACH_COLORS:
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Cores", "Digitar uma cor\nLista de cores", "Selecionar", "Voltar");
 
 		case DIALOG_ATTACH_INPUTCOLOR:
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #1", "{FFFFFF}Coloque a cor que deseja em hexadecimal. Por exemplo: 0xFF0000FF.\n\nVocê pode pesquisar por {ED5547}Color Picker{FFFFFF} no Google e copiar a cor.", "Adicionar", "Voltar");
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #1", "{FFFFFF}Coloque a cor que deseja em hexadecimal. Por exemplo: 0xFF0000FF.\n\nVocÃª pode pesquisar por {ED5547}Color Picker{FFFFFF} no Google e copiar a cor.", "Adicionar", "Voltar");
 
 		case DIALOG_ATTACH_LISTCOLORS:
-		{
-			new dialog[4000] = "Cor padrão";
-			for(new color = 1; color < sizeof AttachedColors; color++) format(dialog, sizeof dialog, "%s\n{%06x}||||||||||||", dialog, AttachedColors[color] >>> 8);
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #1", dialog, "Selecionar", "Voltar");
-		}
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #1", ATTACHED_LIST_COLORS, "Selecionar", "Voltar");
 
 		case DIALOG_ATTACH_INPUTCOLOR2:
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #2", "{FFFFFF}Coloque a cor que deseja em hexadecimal.\nPor exemplo: 0xFF0000FF.\n\nVocê pode pesquisar por {ED5547}Color Picker{FFFFFF} no Google.", "Adicionar", "Voltar");
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #2", "{FFFFFF}Coloque a cor que deseja em hexadecimal.\nPor exemplo: 0xFF0000FF.\n\nVocÃª pode pesquisar por {ED5547}Color Picker{FFFFFF} no Google.", "Adicionar", "Voltar");
 
 		case DIALOG_ATTACH_LISTCOLORS2:
-		{
-			new dialog[4000] = "Cor padrão";
-			for(new color = 1; color < sizeof AttachedColors; color++) format(dialog, sizeof dialog, "%s\n{%06x}||||||||||||", dialog, AttachedColors[color] >>> 8);
-			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #2", dialog, "Selecionar", "Voltar");
-		}
+			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_LIST, "{ED5547}Attached Editor{FFFFFF} - Alterar cor #2", ATTACHED_LIST_COLORS, "Selecionar", "Voltar");
 
 		case DIALOG_ATTACH_EXPORT:
 			ShowPlayerDialog(playerid, dialogid, DIALOG_STYLE_INPUT, "{ED5547}Attached Editor{FFFFFF} - Salvar objeto", "{FFFFFF}Coloque o nome do projeto que queira salvar.", "Salvar", "Voltar");
@@ -343,4 +337,8 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 }
 
 public OnFilterScriptInit()
-	return SendClientMessageToAll(-1, "AttachedEditor carregado! Escreva {ED5547}/aedit{FFFFFF} para começar a utilizar.");
+{
+	for(new color = 1; color < sizeof AttachedColors; color++) format(ATTACHED_LIST_COLORS, sizeof ATTACHED_LIST_COLORS, "%s\n{%06x}||||||||||||", ATTACHED_LIST_COLORS, AttachedColors[color] >>> 8);
+	SendClientMessageToAll(-1, "AttachedEditor carregado! Escreva {ED5547}/aedit{FFFFFF} para comeÃ§ar a utilizar.");
+	return 1;
+}
